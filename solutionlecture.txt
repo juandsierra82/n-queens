@@ -1,0 +1,6 @@
+code should communicate
+code comments should communicate why or how
+point of an algorithm is to find places i don’t need to do the work at all.
+board.rows() returns board object.
+
+start with dumbest simplest thing for code in one

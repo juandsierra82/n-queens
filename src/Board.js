@@ -24,6 +24,16 @@
       }, this);
     },
 
+    map: function (startRow, startCol, callback) {
+    var count = [];
+      for(var i = startRow; i<this.get('n'); i++){
+        for(var i = startCol; i<this.get('n'); i++){
+          count.push(callback(startRow, startCol))
+        }
+      }
+     return count; 
+    },
+
     togglePiece: function(rowIndex, colIndex) {
       this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
       this.trigger('change');
@@ -83,7 +93,6 @@
       var row = this.get(rowIndex);
       var count = 0;
       for(var colIndex = 0; colIndex < n; colIndex++){
-          console.log(this.get(rowIndex), rowIndex);
           if (row[colIndex] === 1) {
             count++;
           }
@@ -91,8 +100,9 @@
       if (count >= 2) {
         return true;
       }
-      return false; // fixme
-    },
+      return false; // how to choose the right implementation
+    }, //code is first and foremost a communication and then instruction to comp.
+    //the way you choose tells the story.
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
@@ -120,7 +130,7 @@
           count++;
         }
       }
-      if(count > 1) {
+      if(count > 1) { //early exit condition possible.
         return true;
       }
 
@@ -184,14 +194,12 @@
       var n = this.get('n');
       var column = minorDiagonalColumnIndexAtFirstRow;
       for(var row = 0; row < n && column >= 0; row++) {
-        debugger;
         if (this.get(row)[column] == 1) {
           count++;
         }
          if(count > 1) {
          return true;
        }
-        debugger       // if(this.get(row)[start + j] === undefined)
         column--;
       }
 
@@ -212,15 +220,16 @@
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
+});
+  
 
-  });
-
-  var makeEmptyMatrix = function(n) {
+  window.makeEmptyMatrix = function(n) {
     return _(_.range(n)).map(function() {
       return _(_.range(n)).map(function() {
         return 0;
       });
     });
   };
+
 
 }());
